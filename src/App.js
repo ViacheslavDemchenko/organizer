@@ -30,46 +30,58 @@ function App() {
   const [dayTasks, setDayTasks] = useState({}); // Список дел на выбранную дату
 
   useEffect(() => {
-    setNotes(notesList);
-    setDate(date);
-    let year = date.getFullYear();
-    let month = date.getMonth();
-    let day = date.getDate();
+    setNotes(notesList); // Получаем начальный список заданий
+    setDate(date); // Устанавливаем сегодняшнюю дату
+    let year = date.getFullYear(); // Получаем год
+    let month = date.getMonth(); // Получаем месяц
+    let day = date.getDate(); // Получаем день
+
+    // Получаем дату в виде строки день, месяц (словом) и год для вывода в компонент со списком заданий на текущую дату
     setCurrentDate(`${day} ${months[month]} ${year} года`);
   }, []);
 
+  // Показываем задания за выбраное число с помощью callback-функции
   const onChange = useCallback(
     (date) => {
-      setDate(date);
-      const year = date.getFullYear();
-      const month = date.getMonth();
-      let day = date.getDate();
+      setDate(date); // Устанавливаем дату
+      const year = date.getFullYear(); // Получаем год
+      const month = date.getMonth(); // Получаем месяц
+      let day = date.getDate(); // Получаем день
+
+      // Получаем выбранную дату в виде строки день, месяц (словом) и год для вывода в компонент со списком заданий
       setCurrentDate(`${day} ${months[month]} ${year} года`);
 
+      // Добавляем 0 ко дню, так как в объекте с заданиями дни идут двухзначные (01, 02 и т.д.)
       if (day < 10) {
         day = '0' + day;
       }
 
+      // Проверяем, если в списке заданий есть выбранный в календаре год, месяц и день
       if (notes.hasOwnProperty(year) && notes[year].hasOwnProperty(month) && notes[year][month].hasOwnProperty(day)) {
-        setDayTasks(notes[year][month][day]);
+        setDayTasks(notes[year][month][day]); // то получаем задания на этот день 
       } else {
-        setDayTasks({});
+        setDayTasks({}); // если нет, то очищаем список заданий на этот день
       }
 
     }, [notes],
   );
 
+  // Удаление заданий по id
   const deleteTask = (id) => {
-    let year = date.getFullYear();
-    let month = date.getMonth();
-    let day = date.getDate();
+    let year = date.getFullYear(); // Получаем год
+    let month = date.getMonth(); // Получаем месяц
+    let day = date.getDate(); // Получаем день
+
+     // Добавляем 0 ко дню, так как в объекте с заданиями дни идут двухзначные (01, 02 и т.д.)
     if (day < 10) {
       day = '0' + day;
     }
 
+    // Удаляем элемент из списка заданий на выбранный день
     const newDayTasks = dayTasks.filter(el => el.id !== id);
     setDayTasks(newDayTasks);
 
+    // Заменяем массив с заданиями за выбранный день в общем списке заданий
     let newNotes = notes[year][month][day] = newDayTasks;
     setNotes(newNotes);
   };
