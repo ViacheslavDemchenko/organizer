@@ -4,16 +4,16 @@ import checkMark from '../../assets/img/check-mark.svg';
 
 import style from './TaskItem.module.scss';
 
-export const TasksItem = ({id, text, deleteTask, fulfillTask, fulfilled}) => {
+export const TasksItem = ({id, text, deleteTask, completed, completeTask}) => {
   return (
     <>
       <div 
         className={style.taskItem}
 
       >
-        <p className={fulfilled ? 'fulfilled' : null}>{text}</p>
+        <p className={completed ? 'completed' : null}>{text}</p>
         <div className={style.btnWrap}>
-          <button className={style.btnCheckMark} onClick={() => fulfillTask(id)}>
+          <button className={style.btnCheckMark} onClick={() => completeTask(id)}>
             <img src={checkMark} alt="Указать как выполненное" width="20" height="26" />
           </button>
           <button className={style.btnTrashCan} onClick={() => deleteTask(id)}>
