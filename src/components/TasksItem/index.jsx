@@ -2,6 +2,7 @@ import React from 'react';
 import trashCan from '../../assets/img/trash-can.svg';
 import checkMark from '../../assets/img/check-mark.svg';
 
+
 import style from './TaskItem.module.scss';
 
 export const TasksItem = ({id, text, deleteTask, completed, completeTask}) => {

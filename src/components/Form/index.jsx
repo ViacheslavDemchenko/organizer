@@ -8,6 +8,7 @@ export const Form = ({addTask}) => {
 
   useEffect(() => {
     const initialDate = new Date().toISOString().split('T')[0];
+    console.log(new Date());
     setCurrentDate(initialDate);
   }, []);
 

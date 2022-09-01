@@ -31,7 +31,7 @@ function App() {
 
   useEffect(() => {
     setNotes(notesList); // Получаем начальный список заданий
-    setDate(date); // Устанавливаем сегодняшнюю дату
+    // setDate(date); // Устанавливаем сегодняшнюю дату
     let year = date.getFullYear(); // Получаем год
     let month = date.getMonth() + 1; // Получаем месяц
     let day = date.getDate(); // Получаем день
@@ -43,10 +43,16 @@ function App() {
 
     // Получаем дату в виде строки день, месяц (словом) и год для вывода в компонент со списком заданий на текущую дату
     setCurrentDate(`${day} ${months[month - 1]} ${year} года`);
+
+    if (localStorage.getItem('tasks')) {
+      setNotes(JSON.parse(localStorage.getItem('tasks')));
+    }
+  
   }, []);
 
   useEffect(() => {
     setNotes(notesList);
+    localStorage.setItem('tasks', JSON.stringify(notes));
   }, [notes]);
 
   // Показываем задания за выбраное число с помощью callback-функции
@@ -101,6 +107,7 @@ function App() {
     const year = newTaskDay[0]; // Берем первый элемент массива (год)
     const month = newTaskDay[1].substr(1); // Берем второй элемент массива (месяц)
     let day = newTaskDay[2]; // Берем третий элемент массива (день)
+    const calendarDate = date.toLocaleString().split(',')[0].replaceAll('.', '-').split('-').reverse().join('-');
 
     // Создаем новое задание
     const task = {
@@ -131,12 +138,9 @@ function App() {
       // Добавляем список заданий за указанное число в общий список заданий
       setNotes([...notes[year][month][day], currentDayAddTask]);
 
-      console.log(date.toISOString().split('T')[0]);
-      console.log(currentDate);
-
       // Если дата, указанная в форме (число в которое добавлялось новое задание) соответтсвует текущей дате календаря,
       // то обновляем на экране и список текущих заданий за это число
-      if (date.toISOString().split('T')[0] === currentDate) {
+      if (calendarDate === currentDate) {
         setDayTasks(notes[year][month][day]);
       }
 
@@ -153,12 +157,9 @@ function App() {
       // Добавляем список заданий за указанное число в общий список заданий
       setNotes([...notes[year][month][day], currentDayAddTask]);
 
-      console.log(date.toISOString().split('T')[0]);
-      console.log(currentDate);
-
       // Если дата, указанная в форме (число в которое добавлялось новое задание) соответтсвует текущей дате календаря,
       // то обновляем на экране и список текущих заданий за это число
-      if (date.toISOString().split('T')[0] === currentDate) {
+      if (calendarDate === currentDate) {
         setDayTasks(notes[year][month][day]);
       }
     }
