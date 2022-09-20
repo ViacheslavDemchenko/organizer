@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import calendar from './calendar/slice';
-import form from './form/slice';
+// import logger from 'redux-logger';
+
+import tasks from './tasks/slice';
 
 export const store = configureStore({
   reducer: {
-    calendar,
-    form
+    tasks: tasks
   },
+  // middleware: (getDefaultMiddleware) =>
+  // getDefaultMiddleware().concat(logger),
 });
