@@ -1,3 +1,4 @@
+// Функция форматирования даты для календаря
 const dateFormatting = (dateNonFormatted) => {
   let year = String(dateNonFormatted.getFullYear()); // Получаем год
   let month = dateNonFormatted.getMonth() + 1; // Получаем месяц
@@ -18,6 +19,7 @@ const dateFormatting = (dateNonFormatted) => {
   }
 };
 
+// Функция форматирования даты для формы
 const formDateFormat = (date) => {
   const newFormDay = date.split('-'); // Разбиваем указанную в форме дату на массив
   const year = newFormDay[0]; // Берем первый элемент массива (год)
@@ -31,4 +33,11 @@ const formDateFormat = (date) => {
   }
 };
 
-export { dateFormatting, formDateFormat };
+// Функция получения данных из localStorage
+const getTasksFromLS = () => {
+  const data = localStorage.getItem('tasks');
+
+  return data ? JSON.parse(data) : {}
+};
+
+export { dateFormatting, formDateFormat, getTasksFromLS };

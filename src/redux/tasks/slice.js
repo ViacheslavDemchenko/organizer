@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getTasksFromLS } from '../../utils';
 
 const initialState = {
-  tasks: {}, // Общий объект с заданиями
+  tasks: getTasksFromLS(), // Общий объект с заданиями
   dayTasks: [], // Массив заданий за выбранный день
   formDate: [], // Дата в форме в формате массива элементов (год, месяц, день)
   calendarDate: [], // Дата в календаре в формате массива элементов (год, месяц, день)

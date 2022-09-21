@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { TasksItem } from './../TasksItem';
 
@@ -22,7 +22,17 @@ const months = [
 export const TasksList = () => {
   const calendarDate = useSelector((state) => state.tasks.calendarDate); // Получаем дату в календаре из редакс
   const currentDayNotes = useSelector((state) => state.tasks.dayTasks); // Получаем задания за текущее число
+  const allTasks = useSelector((state) => state.tasks.tasks);
+  const isMounted = useRef(false);
   let month;
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(allTasks);
+      localStorage.setItem('tasks', json);
+    } 
+    isMounted.current = true;
+  }, [allTasks]);
 
   // Удаляем 0 из порядкового номера месяца, если он начинается на ноль (01, 02 и т.д.)
   if (calendarDate.month && calendarDate.month.length > 1) {
