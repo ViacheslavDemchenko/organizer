@@ -11,23 +11,20 @@
 }
 
 .formTitle {
+  font-size: 3rem;
   color: #fff;
 }
 
 .message {
-  margin: 2rem 0;
+  margin-bottom: 0.9rem;
+  padding: 1rem;
   width: 39.6rem;
   max-width: 39.6rem;
-  height: 21.5rem;
-  max-height: 21.5rem;
+  height: 23.6rem;
   border-radius: 0.8rem;
-}
-
-.date {
-  width: 50%;
-  height: 3rem;
-  border-radius: 0.8rem;
-  border: none;
+  outline: none;
+  font-size: 1.8rem;
+  color: #000;
 }
 
 .btn {

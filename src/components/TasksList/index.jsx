@@ -34,13 +34,13 @@ export const TasksList = () => {
     isMounted.current = true;
   }, [allTasks]);
 
-  // Удаляем 0 из порядкового номера месяца, если он начинается на ноль (01, 02 и т.д.)
-  if (calendarDate.month && calendarDate.month.length > 1) {
+  if (calendarDate.month && calendarDate.month < 10) {
     month = +calendarDate.month[1];
+  } else {
+    month = calendarDate.month;
   }
 
-  // Получаем текущую дату по календарю в нужном формате
-  const choosenDate = `${calendarDate.day} ${months[month]} ${calendarDate.year}`;
+  const choosenDate = `${calendarDate.day} ${months[month - 1]} ${calendarDate.year}`;
 
   return (
     <div className={style.taskListWrap}>
