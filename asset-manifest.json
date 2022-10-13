@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/organizer/static/css/main.78da33aa.css",
-    "main.js": "/organizer/static/js/main.20b8cf64.js",
+    "main.css": "/organizer/static/css/main.6b598078.css",
+    "main.js": "/organizer/static/js/main.436e3cc7.js",
     "static/media/main-bg.jpg": "/organizer/static/media/main-bg.368f149190ae451f082a.jpg",
-    "static/media/edit.svg": "/organizer/static/media/edit.5f88f31bb9d36c26ba1b85f7643138ce.svg",
+    "static/media/edit.svg": "/organizer/static/media/edit.59dbb7bceb6019983099b64afd902a5e.svg",
     "index.html": "/organizer/index.html",
-    "static/media/check-mark.svg": "/organizer/static/media/check-mark.dea20a6a1a4a8b9711691fa163d38f44.svg",
-    "static/media/trash-can.svg": "/organizer/static/media/trash-can.c81ceaa905cd5e162acdd2705421b43d.svg",
-    "main.78da33aa.css.map": "/organizer/static/css/main.78da33aa.css.map",
-    "main.20b8cf64.js.map": "/organizer/static/js/main.20b8cf64.js.map"
+    "static/media/close.svg": "/organizer/static/media/close.7e88a0bc44f2ec5fa9275d90fbb9aa23.svg",
+    "static/media/check.svg": "/organizer/static/media/check.0a33c1ff2a71c619eff382d846c7dfe8.svg",
+    "main.6b598078.css.map": "/organizer/static/css/main.6b598078.css.map",
+    "main.436e3cc7.js.map": "/organizer/static/js/main.436e3cc7.js.map"
   },
   "entrypoints": [
-    "static/css/main.78da33aa.css",
-    "static/js/main.20b8cf64.js"
+    "static/css/main.6b598078.css",
+    "static/js/main.436e3cc7.js"
   ]
 }
