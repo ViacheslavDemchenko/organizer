@@ -1,20 +1,41 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getTasksFromLS } from '../../utils';
 
-const initialState = {
+type Task = {
+  id: number,
+  completed: boolean,
+  taskText: string
+};
+
+type CalendarDate = {
+  day: string,
+  month: string,
+  year: string
+};
+
+type TasksInitialState = {
+  tasks: Task[],
+  dayTasks: Task[],
+  calendarDate: CalendarDate,
+  editMode: boolean,
+  editTask: string,
+  editTaskId: number
+};
+
+const initialState: TasksInitialState = {
   tasks: getTasksFromLS(),
   dayTasks: [],
-  calendarDate: [],
+  calendarDate: {},
   editMode: false,
   editTask: '',
-  editTaskId: ''
+  editTaskId: 0
 };
 
 const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
-    calendarDateOnChange(state, action) {
+    calendarDateOnChange(state, action: PayloadAction<CalendarDate>) {
       state.calendarDate = action.payload;
       const year = action.payload.year;
       const month = action.payload.month;
@@ -26,7 +47,7 @@ const tasksSlice = createSlice({
         state.dayTasks = [];
       }
     },
-    addNewTask(state, action) {
+    addNewTask(state, action: PayloadAction<Task>) {
       if (!state.editMode) {
         const year = state.calendarDate.year;
         const month = state.calendarDate.month;
@@ -80,9 +101,9 @@ const tasksSlice = createSlice({
         state.editMode = false;
       }
     },
-    completeTask(state, action) {
+    completeTask(state, action: PayloadAction<Task>) {
       const newDayTasks = state.dayTasks.map(el => {
-        if(el.id === action.payload) {
+        if(el.id === action.payload.id) {
             return {
               ...el,
               completed: !el.completed
@@ -96,9 +117,9 @@ const tasksSlice = createSlice({
 
     state.dayTasks = state.tasks[state.calendarDate.year][state.calendarDate.month][state.calendarDate.day];
     },
-    deleteTask(state, action) {
+    deleteTask(state, action: PayloadAction<Task>) {
       const currentDateTasks = state.dayTasks;
-      const filteredDayTasks = currentDateTasks.filter((obj) => obj.id !== action.payload);
+      const filteredDayTasks = currentDateTasks.filter((obj) => obj.id !== action.payload.id);
 
       state.dayTasks = filteredDayTasks;
 
@@ -116,12 +137,12 @@ const tasksSlice = createSlice({
         delete state.tasks[state.calendarDate.year];
       }
     },
-    editTask(state, action) {
+    editTask(state, action: PayloadAction<Task>) {
       state.editMode = true;
       const tasks = state.tasks[state.calendarDate.year][state.calendarDate.month][state.calendarDate.day];
 
-      tasks.map((task) => {
-        if (task.id === action.payload) {
+      state.tasks.map(task => {
+        if (task.id === action.payload.id) {
           state.editTask = task.taskText;
           state.editTaskId = task.id;
         }

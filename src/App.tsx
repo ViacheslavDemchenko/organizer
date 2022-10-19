@@ -1,7 +1,7 @@
-import { React, useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Calendar from "react-calendar";
 import { useDispatch, useSelector } from "react-redux";
-import { calendarDateOnChange } from "./redux/tasks/slice";
+import { calendarDateOnChange } from "./redux/slices/taskSlice";
 import { dateFormatting } from "./utils";
 import "react-calendar/dist/Calendar.css";
 import "./App.scss";
@@ -9,12 +9,13 @@ import "./App.scss";
 import { TasksList } from "./components/TasksList";
 import { Form } from "./components/Form";
 
-function App() {
-  const [date, setDate] = useState(new Date());
+export const App: React.FC = () => {
+  const [date, setDate] = React.useState<object>(new Date());
   const currentMonthNotes = useSelector((state) => state.tasks.tasks);
+  const tasks = useSelector((state) => state.tasks);
   const currentYear = useSelector((state) => state.tasks.calendarDate.year);
   const currentMonth = useSelector((state) => state.tasks.calendarDate.month);
-  let datesWithTasks = [];
+  let datesWithTasks: string[] = [];
 
   if (currentMonthNotes && Object.keys(currentMonthNotes).length > 0) {
     if (currentMonthNotes[currentYear]) {
@@ -25,7 +26,7 @@ function App() {
           let nextKey = +key;
 
           if (nextKey < 10) {
-            nextKey = '0' + nextKey;
+            nextKey = Number('0' + nextKey);
           }
 
           datesWithTasks.push(
@@ -93,5 +94,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

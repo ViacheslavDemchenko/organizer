@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import { TasksItem } from './../TasksItem';
+// import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks';
+import { TasksItem } from '../TasksItem';
 
 import style from './TaskList.module.scss';
 
-const months = [
+const months: string[] = [
   'января',
   'февраля',
   'марта',
@@ -19,12 +20,18 @@ const months = [
   'декабря'
 ];
 
-export const TasksList = () => {
-  const calendarDate = useSelector((state) => state.tasks.calendarDate); // Получаем дату в календаре из редакс
-  const currentDayNotes = useSelector((state) => state.tasks.dayTasks); // Получаем задания за текущее число
-  const allTasks = useSelector((state) => state.tasks.tasks);
+type Task = {
+  id: number,
+  completed: boolean,
+  taskText: string
+};
+
+export const TasksList: React.FC = () => {
+  const calendarDate = useAppSelector((state) => state.tasks.calendarDate);
+  const currentDayNotes = useAppSelector((state) => state.tasks.dayTasks);
+  const allTasks = useAppSelector((state) => state.tasks.tasks);
   const isMounted = useRef(false);
-  let month;
+  let month: number;
 
   useEffect(() => {
     if (isMounted.current) {
@@ -48,7 +55,7 @@ export const TasksList = () => {
       <div className={style.listWrap}>
         <div className={style.taskList}>
           {
-            currentDayNotes.length ? currentDayNotes.map(task => (
+            currentDayNotes.length ? currentDayNotes.map((task: Task) => (
               <TasksItem 
                 key={task.id}
                 text={task.taskText}

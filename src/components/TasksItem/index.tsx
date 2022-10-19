@@ -3,30 +3,36 @@ import close from '../../assets/img/close.svg';
 import check from '../../assets/img/check.svg';
 import edit from '../../assets/img/edit.svg';
 
-import { useDispatch } from 'react-redux';
-import { completeTask, deleteTask, editTask } from '../../redux/tasks/slice';
+import { useAppDispatch } from '../../hooks';
+import { completeTask, deleteTask, editTask } from '../../redux/slices/taskSlice';
 
 import style from './TaskItem.module.scss';
 
-export const TasksItem = ({id, text, completed}) => {
-  const dispatch = useDispatch();
+interface TasksItemProps {
+  id: number,
+  text: string,
+  completed: boolean
+};
 
-  const onChangeComplete = (id) => {
+export const TasksItem: React.FC<TasksItemProps> = ({id, text, completed}) => {
+  const dispatch = useAppDispatch();
+
+  const onChangeComplete = (id: number) => {
     dispatch(completeTask(id));
   };
 
-  const onChangeDelete = (id) => {
+  const onChangeDelete = (id: number) => {
     dispatch(deleteTask(id));
   };
 
-  const onChangeEdit = (id) => {
+  const onChangeEdit = (id: number) => {
     dispatch(editTask(id));
   };
 
   return (
     <>
       <div className={style.taskItem}>
-        <p className={completed ? 'completed' : null}>{text}</p>
+        <p className={completed ? 'completed' : ''}>{text}</p>
         <div className={style.btnWrap}>
           <button className={style.btnHandleTask} onClick={() => onChangeComplete(id)}>
             <span className={style.btnHandleTask__tooltip}>Выполнено</span>

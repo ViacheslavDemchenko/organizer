@@ -1,33 +1,49 @@
-import { React, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addNewTask } from '../../redux/tasks/slice';
+import React, { useState, useEffect } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { addNewTask } from '../../redux/slices/taskSlice';
 
 import style from './Form.module.scss';
 
-export const Form = () => {
-  const [newTaskText, setNewTaskText] = useState('');
+type CalendarDate = {
+  day: string,
+  month: string,
+  year: string
+};
 
-  const calendarDate = useSelector((state) => state.tasks.calendarDate);
+type NewAddedTask = {
+  id: number,
+  taskText: string,
+  completed: boolean,
+  year: string,
+  month: string,
+  day: string
+};
+
+export const Form: React.FC<CalendarDate> = () => {
+  const [newTaskText, setNewTaskText] = React.useState<string>('');
+
+  const calendarDate = useAppSelector((state) => state.tasks.calendarDate);
   const formYear = calendarDate.year;
   const formMonth = calendarDate.month;
   const formDay = calendarDate.day;
 
-  const editedTask = useSelector((state) => state.tasks.editTask);
+  const editedTask = useAppSelector((state) => state.tasks.editTask);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setNewTaskText(editedTask);
   }, [editedTask]);
 
-  const newTaskTextHandler = (e) => {
+  const newTaskTextHandler = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setNewTaskText(e.target.value);
   };
 
-  const handlerSubmit = (e) => {
+  const handlerSubmit = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
-    const newTask = {
+    const newTask: NewAddedTask = {
       id: new Date().getTime(),
       taskText: newTaskText,
       completed: false,
